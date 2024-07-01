@@ -21,5 +21,5 @@ def get_user_weather_data(request: Request, visitor_name: str = ''):
     return {
         'client_ip': ipinfo['ip'],
         'location': ipinfo['city'],
-        'greeting': f"Hello, {visitor_name}! the temperature is {round(weather_data['main']['temp'])} degrees Celsius in {ipinfo['city']}"
+        'greeting': f"Hello, {visitor_name}!, the temperature is {round(weather_data['main']['temp'])} degrees Celsius in {ipinfo['city']}"
     }
