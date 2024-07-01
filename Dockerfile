@@ -8,7 +8,7 @@ RUN apt-get update
 COPY . /app/
 
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dirs -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
