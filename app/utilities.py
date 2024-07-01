@@ -27,7 +27,7 @@ def get_client_ip(request: Request):
 def get_ip_info():
     '''Returns the location of the client'''
 
-    response = requests.get(f'https://ipinfo.io?token={get_env_value('IPINFO_APIKEY')}')
+    response = requests.get(f"https://ipinfo.io?token={get_env_value('IPINFO_APIKEY')}")
 
     if response.status_code == 200:
         print(response.json())
@@ -39,7 +39,7 @@ def get_ip_info():
 def get_weather_data(lat, long):
     '''Returns the weather data of the user;s current location'''
 
-    response = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&appid={get_env_value("OPENWEATHER_MAP_APIKEY")}&units=metric')
+    response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&appid={get_env_value('OPENWEATHER_MAP_APIKEY')}&units=metric")
 
     if response.status_code == 200:
         print(response.json())
