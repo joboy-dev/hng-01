@@ -2,8 +2,10 @@ FROM python:3.11.9-slim-bullseye
 
 WORKDIR /app
 
-# Install all dependencies 
-RUN apt-get update
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . /app/
 
@@ -15,4 +17,4 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
