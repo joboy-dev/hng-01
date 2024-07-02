@@ -14,7 +14,7 @@ def get_env_value(key):
 
 def get_client_ip(request: Request):
     '''Returns the IP address of current client'''
-
+    
     x_forwarded_for = request.headers.get('X-Forwarded-For')
     if x_forwarded_for:
         client_ip = x_forwarded_for.split(',')[0]
@@ -28,11 +28,16 @@ def get_ip_info(request: Request):
     '''Returns the location of the client'''
 
     api_key = get_env_value('IPINFO_APIKEY')
+    # Get an ipinfo handler with the API key
     ipinfo_handler = ipinfo.getHandler(api_key)
 
+    # Get the client ip address
     client_ip = get_client_ip(request)
+
+    # Get the location details of the client
     details = ipinfo_handler.getDetails(client_ip)
-    print(details.all)
+
+    # return the details as a dictionary
     return details.all
     
 

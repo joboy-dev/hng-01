@@ -8,11 +8,14 @@ route = APIRouter(prefix='/api', tags=['Stage One Task'])
 def get_user_weather_data(request: Request, visitor_name: str = ''):
     '''Endpoint for getting weather data for a user based on their location'''
 
+    # Get the valie of the query parameters
     visitor_name = request.query_params.get('visitor_name', None)
     if visitor_name is None:
         raise HTTPException(detail='No visitor_name specified in query parameters', status_code=status.HTTP_400_BAD_REQUEST)
     
+    # Get IP address location info
     ipinfo = utilities.get_ip_info(request)
+    # Get weather data for the client location
     weather_data = utilities.get_weather_data(lat=ipinfo["loc"].split(",")[0], long=ipinfo["loc"].split(",")[1])
 
     if not ipinfo or not weather_data:
