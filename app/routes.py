@@ -12,7 +12,7 @@ def get_user_weather_data(request: Request, visitor_name: str = ''):
     if visitor_name is None:
         raise HTTPException(detail='No visitor_name specified in query parameters', status_code=status.HTTP_400_BAD_REQUEST)
     
-    ipinfo = utilities.get_ip_info()
+    ipinfo = utilities.get_ip_info(request)
     weather_data = utilities.get_weather_data(lat=ipinfo["loc"].split(",")[0], long=ipinfo["loc"].split(",")[1])
 
     if not ipinfo or not weather_data:

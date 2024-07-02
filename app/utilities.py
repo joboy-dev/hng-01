@@ -1,4 +1,4 @@
-import os, requests
+import os, requests, ipinfo
 from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import Request
@@ -24,20 +24,20 @@ def get_client_ip(request: Request):
     return client_ip
 
 
-def get_ip_info():
+def get_ip_info(request: Request):
     '''Returns the location of the client'''
 
-    response = requests.get(f"https://ipinfo.io?token={get_env_value('IPINFO_APIKEY')}")
+    api_key = get_env_value('IPINFO_APIKEY')
+    ipinfo_handler = ipinfo.getHandler(api_key)
 
-    if response.status_code == 200:
-        print(response.json())
-        return response.json()
-    else:
-        return None
+    client_ip = get_client_ip(request)
+    details = ipinfo_handler.getDetails(client_ip)
+    print(details.all)
+    return details.all
     
 
 def get_weather_data(lat, long):
-    '''Returns the weather data of the user;s current location'''
+    '''Returns the weather data of the user's current location'''
 
     response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={long}&appid={get_env_value('OPENWEATHER_MAP_APIKEY')}&units=metric")
 
@@ -46,6 +46,3 @@ def get_weather_data(lat, long):
         return response.json()
     else:
         return None
-
-
-
